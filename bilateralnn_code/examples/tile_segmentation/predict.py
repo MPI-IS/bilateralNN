@@ -8,7 +8,6 @@ from compute_accuracy_iou import compute_accuracy_and_iou
 def predict(prototxt, caffe_model):
 
     net = caffe.Net(prototxt, caffe_model, caffe.TEST)
-    net.load_blobs_from(caffe_model)
 
     dinputs = {}
     dinputs['data'] = test_x
