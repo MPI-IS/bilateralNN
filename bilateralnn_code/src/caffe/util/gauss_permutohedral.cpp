@@ -153,12 +153,12 @@ void GaussPermutohedral<TValue>::init(
 
 
     // If do_visualization is true, fill barycentric weights with 1.0
-    // Otherwise, comptue the barycentric coordinates (p.10 in [Adams et al. 2010])
     if (do_visualization){
       for (int i = 0; i <= d_+1; i++){
         barycentric[i] = 1.0;
       }
     }
+    // Otherwise, comptue the barycentric coordinates (p.10 in [Adams et al. 2010])
     else{
       for (int i = 0; i <= d_+1; i++)
         barycentric[i] = 0;
@@ -172,19 +172,6 @@ void GaussPermutohedral<TValue>::init(
       // Wrap around
       barycentric[0] += 1.0 + barycentric[d_+1];
     }
-
-    // Compute the barycentric coordinates (p.10 in [Adams etal 2010])
-    for (int i = 0; i <= d_+1; i++)
-      barycentric[i] = 0;
-    for (int i = 0; i <= d_; i++) {
-      value_type v = (elevated[i] - rem0[i])*down_factor;
-      if (d_-rank[i] < 0 || d_-rank[i]+1 >= d_+2)
-        throw std::runtime_error("GaussPermutohedral: rank access error");
-      barycentric[d_-rank[i]  ] += v;
-      barycentric[d_-rank[i]+1] -= v;
-    }
-    // Wrap around
-    barycentric[0] += 1.0 + barycentric[d_+1];
 
     // Compute all vertices and their offset
     for (int remainder = 0; remainder <= d_; remainder++) {
